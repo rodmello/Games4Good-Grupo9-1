@@ -1,6 +1,6 @@
-class Scene2 extends SimpleScene {
+class Scene4 extends SimpleScene {
   constructor() {
-    super("Scene2");
+    super("Scene4");
   }
 
   init() {
@@ -9,26 +9,25 @@ class Scene2 extends SimpleScene {
 
   preload() {
 
-     this.load.audio("som", "assets/sounds/tone1.ogg");
-     this.load.image('plataformaBanco', "assets/plataformPers.png");
-     this.load.image('ground', "assets/platform.png");
-     this.load.image('bolaImg', "assets/bola.png");
-     this.load.image("faveladia", "assets/favela.jpeg");
-     this.load.image("estrela", "assets/star.png");
-     this.load.image("cestaAlimentos", "assets/CestaDeAlimentos.png");
-     this.load.image("cestaColetar", "assets/CestaCollect.png");
-     this.load.image('bolaColetar', "assets/BolaCollect.png");
-   
+    this.load.audio("som", "assets/sounds/tone1.ogg");
+    this.load.image('plataformaBanco', "assets/plataformPers.png");
+    this.load.image('ground', "assets/platform.png");
+    this.load.image('bolaImg', "assets/bola.png");
+    this.load.image("Casadozezinho", "assets/casaDoZezinho.jpeg");
+    this.load.image("estrela", "assets/star.png");
+    this.load.image("cestaAlimentos", "assets/CestaDeAlimentos.png");
+    this.load.image("cestaColetar", "assets/CestaCollect.png");
+    this.load.image('bolaColetar', "assets/BolaCollect.png");
+   // this.load.image("boneco", "assets/dude.png");
       this.load.spritesheet('boneco','assets/dude.png',
       { frameWidth: 59.1, frameHeight: 50 }
-
     );
   }
 
   create() {
 
         //imagens para ilustração
-    this.add.image(0, 0, 'faveladia').setOrigin(0, 0);
+    this.add.image(0, 0, 'Casadozezinho').setOrigin(0, 0);
     this.add.image(20, 20, 'cestaAlimentos').setScale(0.08);
     this.add.image(100, 22, 'bolaImg' ).setScale(0.08);
 
@@ -42,8 +41,11 @@ class Scene2 extends SimpleScene {
     platforms.create(700, 220, 'ground');
     platforms.create(350, 400, 'ground');
 
+    // plataforma do banco que interagi com o personagem
 
-
+    //plataformPerso = this.physics.add.staticGroup();
+    //plataformPerso.create(530, 360, 'plataformaBanco');
+    //this.physics.add.collider (plataformPerso, player);
 
 
 
@@ -79,17 +81,17 @@ class Scene2 extends SimpleScene {
 
   // plataforma do banco que interagi com o personagem
 
-
-
-    plataformsTeto = this.physics.add.staticGroup();
-    plataformsTeto.create(400, 220, 'ground').setScale(2).refreshBody();
-    plataformsTeto.create(300, 220, 'ground');
-    plataformsTeto.create(500, 220, 'ground');
-
-    this.physics.add.collider (plataformsTeto, player); 
+   
     plataformPerso = this.physics.add.staticGroup();
     plataformPerso.create(530, 360, 'plataformaBanco').setScale(1).refreshBody();
     this.physics.add.collider (plataformPerso, player);
+
+    plataformsTeto = this.physics.add.staticGroup();
+    plataformsTeto.create(400, 220, 'ground') 
+    plataformsTeto.create(300, 220, 'ground')
+    plataformsTeto.create(500, 220, 'ground')
+
+    this.physics.add.collider (plataformsTeto, player);
 
     //CESTA E COLETAR
 
@@ -105,7 +107,7 @@ class Scene2 extends SimpleScene {
 
   });
   
-    scoreCestaText = this.add.text(31, 10, ':0', { fontSize: '32px', fill: '#FF0000' });
+    scoreCestaText = this.add.text(31, 10, ':8', { fontSize: '32px', fill: '#FF0000' });
     function collectCesta (player, cesta)
   {
     cesta.disableBody(true, true);
@@ -130,7 +132,7 @@ class Scene2 extends SimpleScene {
     
     });
 
-    scoreBolaText = this.add.text(120, 10, ':0', { fontSize: '32px', fill: '#FF0000' });
+    scoreBolaText = this.add.text(120, 10, ':2', { fontSize: '32px', fill: '#FF0000' });
     function collectBola (player, bola)
     {
       bola.disableBody(true, true);
@@ -140,21 +142,19 @@ class Scene2 extends SimpleScene {
     }
     this.physics.add.collider(platforms, bola);
     this.physics.add.overlap(player, bola, collectBola, null, this);
-    
-    
-    this.myText = this.addText(600, 50, 'Next', 0x000000);
+
+    this.myText = this.addText(600, 50, 'Finish', 0x000000);
     this.myText.depth = 1;
     this.myText.setOrigin(0.5, 0.5);
     this.myText.visible = false;
     this.myButton = this.add.rectangle(600, 50, 100, 50, 0x0000FF);
     this.enableClick(this.myButton); 
     this.myButton.visible = false;
-
-  }   
+  }
 
   
   update() {
-   if(score == 4 && scoreBola == 1)
+    if(score == 10 && scoreBola == 3)
     {
   
     this.myButton.visible= true;
@@ -162,7 +162,8 @@ class Scene2 extends SimpleScene {
     
     this.myText.visible= true;
     }
-    cursors = this.input.keyboard.createCursorKeys();
+
+   cursors = this.input.keyboard.createCursorKeys();
     if (cursors.left.isDown)
     {
     player.setVelocityX(-160);
@@ -185,14 +186,11 @@ class Scene2 extends SimpleScene {
     {
     player.setVelocityY(-200);
     }
-       
-    
-    if(this.myButton.wasClicked()){
-     this.scene.start("Scene3");
-    {
 
-      
-    }
+
+if(this.myButton.wasClicked()){
+     this.scene.start("Finish");
+
   } 
 } 
 }
